@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institut Top Excellence - Formation Développement Web</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --web-orange: #ff6b35;
+            --web-blue: #4285f4;
+            --web-green: #00c851;
+            --web-purple: #9c27b0;
+            --dark-bg: #0d1117;
+            --card-bg: #161b22;
+            --secondary-bg: #21262d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --border: #30363d;
+            --success: #238636;
+            --warning: #d29922;
+            --error: #da3633;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Animated Background */
+        .web-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(66, 133, 244, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(0, 200, 81, 0.1) 0%, transparent 50%);
+        }
+        
+        .code-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(90deg, var(--web-blue) 1px, transparent 1px),
+                linear-gradient(var(--web-blue) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: codeMove 25s linear infinite;
+        }
+        
+        @keyframes codeMove {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(30px) translateY(30px); }
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--web-orange);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo::before {
+            content: '</>';
+            color: var(--web-blue);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 6px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--web-orange);
+            border-color: var(--web-orange);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 120px 0 60px;
+        }
+        
+        .code-editor {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-editor::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--web-orange), var(--web-blue), var(--web-green), var(--web-purple));
+        }
+        
+        .editor-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem 1.5rem;
+            background: var(--secondary-bg);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .red-dot { background: var(--error); }
+        .yellow-dot { background: var(--warning); }
+        .green-dot { background: var(--success); }
+        
+        .file-tabs {
+            display: flex;
+            margin-left: 1rem;
+            gap: 0;
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: var(--dark-bg);
+            color: var(--web-orange);
+            border-bottom-color: var(--dark-bg);
+        }
+        
+        .tab:first-child { border-radius: 6px 0 0 0; }
+        .tab:last-child { border-radius: 0 6px 0 0; }
+        
+        .code-content {
+            padding: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            min-height: 300px;
+        }
+        
+        .code-line {
+            margin: 0.3rem 0;
+            opacity: 0;
+            animation: typeIn 0.8s ease forwards;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .code-line::before {
+            content: attr(data-line);
+            position: absolute;
+            left: 0;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            width: 1.5rem;
+            text-align: right;
+        }
+        
+        @keyframes typeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .html-tag { color: var(--web-orange); font-weight: 600; }
+        .css-prop { color: var(--web-blue); }
+        .js-keyword { color: var(--web-purple); font-weight: 600; }
+        .string { color: var(--web-green); }
+        .comment { color: var(--text-secondary); font-style: italic; }
+        .number { color: #f78c6c; }
+        
+        .main-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--web-orange), var(--web-blue), var(--web-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+        
+        .main-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--web-orange), var(--web-blue));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: var(--secondary-bg);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+        }
+        
+        .section-title::before {
+            content: '/* ';
+            position: absolute;
+            left: -60px;
+            color: var(--web-orange);
+        }
+        
+        .section-title::after {
+            content: ' */';
+            position: absolute;
+            right: -60px;
+            color: var(--web-orange);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--web-orange), var(--web-blue));
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--web-orange);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--web-orange);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Curriculum Section */
+        .curriculum {
+            padding: 6rem 0;
+            background: var(--dark-bg);
+        }
+        
+        .curriculum-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .module {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .module:hover {
+            border-color: var(--web-blue);
+            box-shadow: 0 10px 30px rgba(66, 133, 244, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .module-header {
+            background: linear-gradient(135deg, var(--web-blue), var(--web-purple));
+            color: white;
+            padding: 1.5rem 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .module-content {
+            padding: 1.5rem 2rem;
+            color: var(--text-secondary);
+            display: none;
+        }
+        
+        .module-content.active {
+            display: block;
+        }
+        
+        .module-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .module-toggle.active {
+            transform: rotate(180deg);
+        }
+        
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--web-green), var(--web-purple));
+        }
+        
+        .stat-card:hover {
+            border-color: var(--web-green);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 200, 81, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--web-green);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            background: var(--secondary-bg);
+            text-align: center;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--web-purple), var(--web-green));
+        }
+        
+        .contact-card:hover {
+            border-color: var(--web-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(156, 39, 176, 0.2);
+        }
+        
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .contact-title {
+            color: var(--web-purple);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .contact-info {
+            color: var(--text-secondary);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        footer p {
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .code-editor {
+                padding: 0;
+                margin: 0 0 2rem;
+            }
+            
+            .section-title::before,
+            .section-title::after {
+                display: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .file-tabs {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="web-background"></div>
+    <div class="code-pattern"></div>
+    
+    <header>
+        <nav class="container">
+            <div class="logo">TOP EXCELLENCE</div>
+            <ul class="nav-links">
+                <li><a href="#home">index.html</a></li>
+                <li><a href="#features">features.css</a></li>
+                <li><a href="#curriculum">curriculum.js</a></li>
+                <li><a href="#contact">contact.php</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="code-editor">
+                <div class="editor-header">
+                    <div class="dot red-dot"></div>
+                    <div class="dot yellow-dot"></div>
+                    <div class="dot green-dot"></div>
+                    <div class="file-tabs">
+                        <div class="tab active">index.html</div>
+                        <div class="tab">style.css</div>
+                        <div class="tab">script.js</div>
+                        <div class="tab">config.php</div>
+                    </div>
+                </div>
+                <div class="code-content" id="code-display">
+                    <div class="code-line" data-line="1" style="animation-delay: 0.1s">
+                        <span class="comment">&lt;!-- Bienvenue dans le développement web --&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="2" style="animation-delay: 0.3s">
+                        <span class="html-tag">&lt;!DOCTYPE</span> <span class="string">html</span><span class="html-tag">&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="3" style="animation-delay: 0.5s">
+                        <span class="html-tag">&lt;html</span> <span class="css-prop">lang</span>=<span class="string">"fr"</span><span class="html-tag">&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="4" style="animation-delay: 0.7s">
+                        &nbsp;&nbsp;<span class="html-tag">&lt;head&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="5" style="animation-delay: 0.9s">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="html-tag">&lt;title&gt;</span>Ma Première Page Web<span class="html-tag">&lt;/title&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="6" style="animation-delay: 1.1s">
+                        &nbsp;&nbsp;<span class="html-tag">&lt;/head&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="7" style="animation-delay: 1.3s">
+                        &nbsp;&nbsp;<span class="html-tag">&lt;body&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="8" style="animation-delay: 1.5s">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="html-tag">&lt;h1&gt;</span>Bienvenue dans le Web !<span class="html-tag">&lt;/h1&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="9" style="animation-delay: 1.7s">
+                        &nbsp;&nbsp;<span class="html-tag">&lt;/body&gt;</span>
+                    </div>
+                    <div class="code-line" data-line="10" style="animation-delay: 1.9s">
+                        <span class="html-tag">&lt;/html&gt;</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="main-title">Créez des Sites Web Professionnels</h1>
+            <p class="main-subtitle">// HTML • CSS • JavaScript • PHP • MySQL</p>
+            <a href="#contact" class="cta-button">startLearning()</a>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title fade-up">Pourquoi Apprendre le Développement Web ?</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">frontend.design()</h3>
+                    <p class="feature-desc">Maîtrisez HTML5, CSS3 et JavaScript pour créer des interfaces utilisateur modernes et responsives</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 class="feature-title">backend.develop()</h3>
+                    <p class="feature-desc">Apprenez PHP et MySQL pour gérer les données et créer des applications web dynamiques</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">responsive.create()</h3>
+                    <p class="feature-desc">Développez des sites web adaptatifs qui fonctionnent parfaitement sur tous les appareils</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">tools.master()</h3>
+                    <p class="feature-desc">Utilisez les outils modernes : VSCode, Git, DevTools pour un développement professionnel</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">projects.build()</h3>
+                    <p class="feature-desc">Construisez un portfolio avec des projets concrets : e-commerce, blog, application web</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">💼</div>
+                    <h3 class="feature-title">career.launch()</h3>
+                    <p class="feature-desc">Préparez-vous aux métiers du web : développeur front-end, back-end ou full-stack</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="curriculum" class="curriculum">
+        <div class="container">
+            <h2 class="section-title fade-up">Programme de Formation</h2>
+            <div class="curriculum-container">
+                
+                <div class="module fade-up">
+                    <div class="module-header">
+                        <span>1. Fondamentaux HTML5</span>
+                        <button class="module-toggle">▼</button>
+                    </div>
+                    <div class="module-content">
+                        <p>Structure HTML, balises sémantiques, formulaires, médias, accessibilité</p>
+                    </div>
+                </div>
+
+                <div class="module fade-up">
+                    <div class="module-header">
+                        <span>2. Stylisation CSS3</span>
+                        <button class="module-toggle">▼</button>
+                    </div>
+                    <div class="module-content">
+                        <p>Sélecteurs, mise en page, Flexbox, Grid, animations, design responsive</p>
+                    </div>
+                </div>
+
+                <div class="module fade-up">
+                    <div class="module-header">
+                        <span>3. JavaScript Interactif</span>
+                        <button class="module-toggle">▼</button>
+                    </div>
+                    <div class="module-content">
+                        <p>Syntaxe, DOM, événements, AJAX, APIs, programmation asynchrone</p>
+                    </div>
+                </div>
+
+                <div class="module fade-up">
+                    <div class="module-header">
+                        <span>4. Développement Backend PHP</span>
+                        <button class="module-toggle">▼</button>
+                    </div>
+                    <div class="module-content">
+                        <p>Syntaxe PHP, sessions, cookies, gestion de fichiers, programmation orientée objet</p>
+                    </div>
+                </div>
+
+                <div class="module fade-up">
+                    <div class="module-header">
+                        <span>5. Base de Données MySQL</span>
+                        <button class="module-toggle">▼</button>
+                    </div>
+                    <div class="module-content">
+                        <p>Conception de bases de données, requêtes SQL, intégration PHP-MySQL</p>
+                    </div>
+                </div>
+
+                <div class="module fade-up">
+                    <div class="module-header">
+                        <span>6. Projets Pratiques</span>
+                        <button class="module-toggle">▼</button>
+                    </div>
+                    <div class="module-content">
+                        <p>Site vitrine, blog dynamique, e-commerce simple, application CRUD complète</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="stats fade-up">
+                <div class="stat-card">
+                    <span class="stat-number">40h</span>
+                    <p class="stat-label">Formation Intensive</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">6</span>
+                    <p class="stat-label">Technologies Maîtrisées</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4+</span>
+                    <p class="stat-label">Projets Réalisés</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <p class="stat-label">Pratique Garantie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-up">Lancez Votre Carrière Web</h2>
+            <p class="fade-up" style="color: var(--text-secondary); font-family: 'JetBrains Mono', monospace;">
+                <span class="js-keyword">if</span> (motivation === <span class="string">"high"</span>) { <span class="css-prop">contactUs</span>(); }
+            </p>
+            
+            <div class="contact-grid">
+                <div class="contact-card fade-up">
+                    <div class="contact-icon">📞</div>
+                    <h3 class="contact-title">phone.call()</h3>
+                    <p class="contact-info">0770 86 56 34</p>
+                </div>
+                <div class="contact-card fade-up">
+                    <div class="contact-icon">✉️</div>
+                    <h3 class="contact-title">email.send()</h3>
+                    <p class="contact-info">contact@groupetopexcellence.com</p>
+                </div>
+                <div class="contact-card fade-up">
+                    <div class="contact-icon">📍</div>
+                    <h3 class="contact-title">location.find()</h3>
+                    <p class="contact-info">Résidence Bois Sacré, Boulevard Colonel Amirouche, Bejaïa, Algeria</p>
+                </div>
+            </div>
+            
+            <!-- <div style="margin-top: 3rem;">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdAyRl2Iz4eCU3wInMpnLImQtVziQE-8PXXoacu1Cqp0LAa3A/viewform?usp=dialog" class="cta-button fade-up">
+                    Inscrire()
+                </a> -->
+            </div>
+        </div>
+    </section>
+
+       <!-- (Your HTML body content above this) -->
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Institut Top Excellence. Tous droits réservés. | Powered by TOP-EXCELLENCE.js</p>
+        </div>
+    </footer>
+
+    <script>
+        // =================================================================
+        // CORRECTED & IMPROVED JAVASCRIPT
+        // =================================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Smooth scrolling for navigation ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // --- Scroll-triggered "fade-up" animations ---
+            const fadeUpElements = document.querySelectorAll('.fade-up');
+            function handleScrollAnimations() {
+                const windowHeight = window.innerHeight;
+                fadeUpElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+
+            // --- Header background change on scroll ---
+            function handleHeaderScroll() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 50) {
+                    header.style.background = 'rgba(13, 17, 23, 0.98)';
+                    header.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                } else {
+                    header.style.background = 'rgba(13, 17, 23, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            }
+
+            // --- Code editor content for tabs ---
+            const codeContents = {
+                'index.html': `
+                    <div class="code-line" data-line="1" style="animation-delay: 0.1s"><span class="comment">&lt;!-- Bienvenue dans le développement web --&gt;</span></div>
+                    <div class="code-line" data-line="2" style="animation-delay: 0.3s"><span class="html-tag">&lt;!DOCTYPE</span> <span class="string">html</span><span class="html-tag">&gt;</span></div>
+                    <div class="code-line" data-line="3" style="animation-delay: 0.5s"><span class="html-tag">&lt;html</span> <span class="css-prop">lang</span>=<span class="string">"fr"</span><span class="html-tag">&gt;</span></div>
+                    <div class="code-line" data-line="4" style="animation-delay: 0.7s">&nbsp;&nbsp;<span class="html-tag">&lt;head&gt;</span></div>
+                    <div class="code-line" data-line="5" style="animation-delay: 0.9s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="html-tag">&lt;title&gt;</span>Ma Première Page Web<span class="html-tag">&lt;/title&gt;</span></div>
+                    <div class="code-line" data-line="6" style="animation-delay: 1.1s">&nbsp;&nbsp;<span class="html-tag">&lt;/head&gt;</span></div>
+                    <div class="code-line" data-line="7" style="animation-delay: 1.3s">&nbsp;&nbsp;<span class="html-tag">&lt;body&gt;</span></div>
+                    <div class="code-line" data-line="8" style="animation-delay: 1.5s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="html-tag">&lt;h1&gt;</span>Bienvenue dans le Web !<span class="html-tag">&lt;/h1&gt;</span></div>
+                    <div class="code-line" data-line="9" style="animation-delay: 1.7s">&nbsp;&nbsp;<span class="html-tag">&lt;/body&gt;</span></div>
+                    <div class="code-line" data-line="10" style="animation-delay: 1.9s"><span class="html-tag">&lt;/html&gt;</span></div>
+                `,
+                'style.css': `
+                    <div class="code-line" data-line="1" style="animation-delay: 0.1s"><span class="comment">/* Styles pour une page moderne */</span></div>
+                    <div class="code-line" data-line="2" style="animation-delay: 0.3s"><span class="html-tag">body</span> {</div>
+                    <div class="code-line" data-line="3" style="animation-delay: 0.5s">&nbsp;&nbsp;<span class="css-prop">font-family</span>: <span class="string">'Inter', sans-serif</span>;</div>
+                    <div class="code-line" data-line="4" style="animation-delay: 0.7s">&nbsp;&nbsp;<span class="css-prop">background</span>: <span class="string">#0d1117</span>;</div>
+                    <div class="code-line" data-line="5" style="animation-delay: 0.9s">&nbsp;&nbsp;<span class="css-prop">color</span>: <span class="string">#f0f6fc</span>;</div>
+                    <div class="code-line" data-line="6" style="animation-delay: 1.1s">}</div>
+                    <div class="code-line" data-line="7" style="animation-delay: 1.3s"><span class="html-tag">.button</span> {</div>
+                    <div class="code-line" data-line="8" style="animation-delay: 1.5s">&nbsp;&nbsp;<span class="css-prop">padding</span>: <span class="number">1rem 2rem</span>;</div>
+                    <div class="code-line" data-line="9" style="animation-delay: 1.7s">&nbsp;&nbsp;<span class="css-prop">border-radius</span>: <span class="number">8px</span>;</div>
+                    <div class="code-line" data-line="10" style="animation-delay: 1.9s">}</div>
+                `,
+                'script.js': `
+                    <div class="code-line" data-line="1" style="animation-delay: 0.1s"><span class="comment">// JavaScript interactif</span></div>
+                    <div class="code-line" data-line="2" style="animation-delay: 0.3s"><span class="js-keyword">const</span> button = document.querySelector(<span class="string">'#myButton'</span>);</div>
+                    <div class="code-line" data-line="3" style="animation-delay: 0.5s">&nbsp;</div>
+                    <div class="code-line" data-line="4" style="animation-delay: 0.7s">button.addEventListener(<span class="string">'click'</span>, () => {</div>
+                    <div class="code-line" data-line="5" style="animation-delay: 0.9s">&nbsp;&nbsp;<span class="js-keyword">if</span> (user.isReady()) {</div>
+                    <div class="code-line" data-line="6" style="animation-delay: 1.1s">&nbsp;&nbsp;&nbsp;&nbsp;launchRocket();</div>
+                    <div class="code-line" data-line="7" style="animation-delay: 1.3s">&nbsp;&nbsp;} <span class="js-keyword">else</span> {</div>
+                    <div class="code-line" data-line="8" style="animation-delay: 1.5s">&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">'Prepare for launch!'</span>);</div>
+                    <div class="code-line" data-line="9" style="animation-delay: 1.7s">&nbsp;&nbsp;}</div>
+                    <div class="code-line" data-line="10" style="animation-delay: 1.9s">});</div>
+                `,
+                'config.php': `
+                    <div class="code-line" data-line="1" style="animation-delay: 0.1s"><span class="html-tag">&lt;?php</span></div>
+                    <div class="code-line" data-line="2" style="animation-delay: 0.3s"><span class="comment">// Configuration de la base de données</span></div>
+                    <div class="code-line" data-line="3" style="animation-delay: 0.5s"><span class="js-keyword">define</span>(<span class="string">'DB_HOST'</span>, <span class="string">'localhost'</span>);</div>
+                    <div class="code-line" data-line="4" style="animation-delay: 0.7s"><span class="js-keyword">define</span>(<span class="string">'DB_NAME'</span>, <span class="string">'TOP-EXCELLENCE'</span>);</div>
+                    <div class="code-line" data-line="5" style="animation-delay: 0.9s"><span class="js-keyword">define</span>(<span class="string">'DB_USER'</span>, <span class="string">'root'</span>);</div>
+                    <div class="code-line" data-line="6" style="animation-delay: 1.1s"><span class="js-keyword">define</span>(<span class="string">'DB_PASS'</span>, <span class="string">''</span>);</div>
+                    <div class="code-line" data-line="7" style="animation-delay: 1.3s">&nbsp;</div>
+                    <div class="code-line" data-line="8" style="animation-delay: 1.5s"><span class="js-keyword">$pdo</span> = <span class="js-keyword">new</span> <span class="css-prop">PDO</span>(<span class="string">"mysql:host="</span>.DB_HOST, DB_USER, DB_PASS);</div>
+                    <div class="code-line" data-line="9" style="animation-delay: 1.7s"><span class="js-keyword">echo</span> <span class="string">"Connexion réussie !"</span>;</div>
+                    <div class="code-line" data-line="10" style="animation-delay: 1.9s"><span class="html-tag">?&gt;</span></div>
+                `
+            };
+
+            // --- **FIXED** Tab switching functionality with animation ---
+            const codeDisplay = document.getElementById('code-display');
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    if (this.classList.contains('active')) return; // Do nothing if already active
+
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const fileName = this.textContent;
+                    
+                    // Fade out, change content, then fade in to re-trigger animation
+                    codeDisplay.style.opacity = '0';
+                    setTimeout(() => {
+                        if (codeContents[fileName]) {
+                            codeDisplay.innerHTML = codeContents[fileName];
+                        }
+                        codeDisplay.style.opacity = '1';
+                    }, 250); // This timeout should match the CSS transition time
+                });
+            });
+
+            // --- **FIXED** Module (Accordion) toggle functionality ---
+            document.querySelectorAll('.module-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const currentModule = this.closest('.module');
+                    const content = currentModule.querySelector('.module-content');
+                    const isActive = content.classList.contains('active');
+                    
+                    // Close all other modules
+                    document.querySelectorAll('.module-content').forEach(c => {
+                        c.classList.remove('active');
+                        c.style.maxHeight = null;
+                    });
+                    document.querySelectorAll('.module-toggle').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // If the clicked module was not active, open it
+                    if (!isActive) {
+                        content.classList.add('active');
+                        this.classList.add('active');
+                        // Set max-height for smooth transition
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Initial calls and event listeners
+            handleScrollAnimations();
+            window.addEventListener('scroll', () => {
+                handleScrollAnimations();
+                handleHeaderScroll();
+            });
+
+            // Page load fade-in effect
+            document.body.style.opacity = '1';
+        });
+
+        // Add necessary styles dynamically for better performance and encapsulation
+        const style = document.createElement('style');
+        style.textContent = `
+            body {
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out;
+            }
+            .code-content {
+                transition: opacity 0.25s ease-in-out;
+            }
+            .module-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            .module-content.active {
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
